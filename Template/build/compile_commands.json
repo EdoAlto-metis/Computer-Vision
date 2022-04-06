@@ -1,0 +1,7 @@
+[
+{
+  "directory": "D:/Gith/Computer-Vision/Template/build",
+  "command": "C:\\mingw64\\bin\\g++.exe   -g -o CMakeFiles\\OpenCV_Template.dir\\main.cpp.obj -c D:\\Gith\\Computer-Vision\\Template\\main.cpp",
+  "file": "D:/Gith/Computer-Vision/Template/main.cpp"
+}
+]

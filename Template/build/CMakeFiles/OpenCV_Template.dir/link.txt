@@ -1,0 +1,3 @@
+"C:\Program Files\CMake\bin\cmake.exe" -E rm -f CMakeFiles\OpenCV_Template.dir/objects.a
+C:\mingw64\bin\ar.exe qc CMakeFiles\OpenCV_Template.dir/objects.a @CMakeFiles\OpenCV_Template.dir\objects1.rsp
+C:\mingw64\bin\g++.exe -g -Wl,--whole-archive CMakeFiles\OpenCV_Template.dir/objects.a -Wl,--no-whole-archive -o OpenCV_Template.exe -Wl,--out-implib,libOpenCV_Template.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\OpenCV_Template.dir\linklibs.rsp
