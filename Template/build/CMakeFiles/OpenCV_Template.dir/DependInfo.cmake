@@ -8,7 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "D:/Gith/Computer-Vision/Template/main.cpp" "CMakeFiles/OpenCV_Template.dir/main.cpp.obj" "gcc" "CMakeFiles/OpenCV_Template.dir/main.cpp.obj.d"
+  "C:/Users/Edoardo/Gith/Computer-Vision/Template/main.cpp" "CMakeFiles/OpenCV_Template.dir/main.cpp.obj" "gcc" "CMakeFiles/OpenCV_Template.dir/main.cpp.obj.d"
   )
 
 # Targets to which this target links.

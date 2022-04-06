@@ -291,7 +291,7 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "OpenCV_Template::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-OpenCV_Template-Debug-db841a9ffb0702300ffb.json",
+					"jsonFile" : "target-OpenCV_Template-Debug-f2bcca895603e78646f6.json",
 					"name" : "OpenCV_Template",
 					"projectIndex" : 0
 				}
@@ -301,8 +301,8 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "D:/Gith/Computer-Vision/Template/build",
-		"source" : "D:/Gith/Computer-Vision/Template"
+		"build" : "C:/Users/Edoardo/Gith/Computer-Vision/Template/build",
+		"source" : "C:/Users/Edoardo/Gith/Computer-Vision/Template"
 	},
 	"version" : 
 	{
