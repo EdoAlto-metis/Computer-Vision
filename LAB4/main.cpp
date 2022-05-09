@@ -7,5 +7,8 @@ using namespace cv;
 int main(int, char**) {
     std::cout << "Hello, world!\n";
 }
-std::string path = "C:/Users/Edoardo/Gith/Computer-Vision/LAB3/imgs";										// insert here images directory
-cv::Mat input_image = cv::imread(path + "road1.png");
+string path = "/Desktop/Computer-Vision/img/LAB4/LNSRT1";										// insert here images directory
+Mat input_image = cv::imread(path + "padova.jpg");
+
+cv::imshow("input image", input_image);
+waitKey(0);
