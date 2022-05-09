@@ -1,7 +1,0 @@
-[
-{
-  "directory": "/home/edoardo/Desktop/Computer-Vision/LAB3/build",
-  "command": "/usr/bin/g++  -isystem /usr/local/include/opencv4 -g -o CMakeFiles/LAB3.dir/main.cpp.o -c /home/edoardo/Desktop/Computer-Vision/LAB3/main.cpp",
-  "file": "/home/edoardo/Desktop/Computer-Vision/LAB3/main.cpp"
-}
-]

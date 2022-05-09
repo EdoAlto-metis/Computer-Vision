@@ -1,3 +1,7 @@
+# Created by https://www.toptal.com/developers/gitignore/api/visualstudiocode,c++,opencv
+# Edit at https://www.toptal.com/developers/gitignore?templates=visualstudiocode,c++,opencv
+
+### C++ ###
 # Prerequisites
 *.d
 
@@ -30,3 +34,39 @@
 *.exe
 *.out
 *.app
+
+### OpenCV ###
+#OpenCV for Mac and Linux
+#build and release folders
+*/CMakeFiles
+*/CMakeCache.txt
+*/Makefile
+*/cmake_install.cmake
+.DS_Store
+
+### VisualStudioCode ###
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/*.code-snippets
+
+# Local History for Visual Studio Code
+.history/
+
+# Built Visual Studio Code Extensions
+*.vsix
+
+### VisualStudioCode Patch ###
+# Ignore all local history of files
+.history
+.ionide
+
+# Support for Project snippet scope
+.vscode/*.code-snippets
+
+# Ignore code-workspaces
+*.code-workspace
+
+# End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,c++,opencv

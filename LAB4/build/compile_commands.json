@@ -1,7 +1,0 @@
-[
-{
-  "directory": "C:/Users/Edoardo/Gith/Computer-Vision/Template/build",
-  "command": "C:/cygwin64/bin/x86_64-pc-cygwin-g++.exe  @CMakeFiles/OpenCV_Template.dir/includes_CXX.rsp -g -o CMakeFiles/OpenCV_Template.dir/main.cpp.obj -c C:/Users/Edoardo/Gith/Computer-Vision/Template/main.cpp",
-  "file": "C:/Users/Edoardo/Gith/Computer-Vision/Template/main.cpp"
-}
-]
