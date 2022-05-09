@@ -7,7 +7,7 @@ cv::Mat hugesTransform(cv::Mat canny_edges);
 
 int main() {
 
-	std::string path = "C:/Users/Edoardo/Pictures/images/";										// insert here images directory
+	std::string path = "/home/edoardo/Pictures/Computer-Vision/LAB3/";										// insert here images directory
 
 	cv::Mat input_image = cv::imread(path + "road2.png");
 	if (input_image.empty()) {
