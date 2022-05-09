@@ -1,9 +1,0 @@
-C:/Users/Edoardo/Gith/Computer-Vision/LAB3/CMakeFiles/Experimental.dir
-C:/Users/Edoardo/Gith/Computer-Vision/LAB3/CMakeFiles/Nightly.dir
-C:/Users/Edoardo/Gith/Computer-Vision/LAB3/CMakeFiles/Continuous.dir
-C:/Users/Edoardo/Gith/Computer-Vision/LAB3/CMakeFiles/NightlyMemoryCheck.dir
-C:/Users/Edoardo/Gith/Computer-Vision/LAB3/CMakeFiles/LAB3.dir
-C:/Users/Edoardo/Gith/Computer-Vision/LAB3/CMakeFiles/PACKAGE.dir
-C:/Users/Edoardo/Gith/Computer-Vision/LAB3/CMakeFiles/RUN_TESTS.dir
-C:/Users/Edoardo/Gith/Computer-Vision/LAB3/CMakeFiles/ALL_BUILD.dir
-C:/Users/Edoardo/Gith/Computer-Vision/LAB3/CMakeFiles/ZERO_CHECK.dir
