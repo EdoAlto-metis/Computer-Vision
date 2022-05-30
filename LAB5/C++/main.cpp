@@ -35,7 +35,8 @@ int main(int, char**) {
         Mat sub_image = input_image(park_slot);
         sub_images.push_back(sub_image);
     }
-    equalHist(sub_images[0]);
+    //equalHist();
+	//waitKey(0);
 }
 
 void readCameraInfoCSV(CameraInfo *camera, string file_name){
@@ -66,8 +67,8 @@ void readCameraInfoCSV(CameraInfo *camera, string file_name){
         Rect park_slot = Rect(x, y, width, high);
         park_slot_coll.push_back(park_slot);        
     }
-    camera -> slot_id_coll;
-    camera -> park_slot_coll;
+    camera -> slot_id_coll = slot_id_coll;
+    camera -> park_slot_coll = park_slot_coll;
 }
 
 /** 
