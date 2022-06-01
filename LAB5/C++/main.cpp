@@ -16,8 +16,7 @@ struct CameraInfo{
 };
 
 void readCameraInfoCSV(CameraInfo *camera, string file_name);
-void showHistogram(vector<Mat>& hists, string plot_name);
-void equalHist(Mat input_image);
+Mat equalHist(Mat input_image);
  
 int main(int, char**) {
     std::cout << "Hello, world!\n";
@@ -33,8 +32,18 @@ int main(int, char**) {
     {
         Rect park_slot = cam_1.park_slot_coll[i];
         Mat sub_image = input_image(park_slot);
-        sub_images.push_back(sub_image);
+		Mat resized_sub_image;
+		resize(sub_image, resized_sub_image, Size(250, 250), INTER_LINEAR);
+		Mat EQ_sub_image = equalHist(resized_sub_image);
+        sub_images.push_back(EQ_sub_image);
     }
+	for (int img_index = 0; img_index<sub_images.size(); img_index++){
+		Mat image = sub_images[img_index];
+		imshow("substracted image", image);
+		waitKey(0);
+	}
+	destroyAllWindows();
+
     //equalHist();
 	//waitKey(0);
 }
@@ -58,12 +67,13 @@ void readCameraInfoCSV(CameraInfo *camera, string file_name){
     
     vector<string> slot_id_coll;
     vector<Rect> park_slot_coll; 
+	float conv_factor = 0.385;
     for(int i=1;i<content.size();i++){
         slot_id_coll.push_back(content[i][0]);
-        int x = stoi(content[i][1]);
-        int y = stoi(content[i][2]);
-        int width = stoi(content[i][3]);
-        int high = stoi(content[i][4]);
+        int x = int(stoi(content[i][1])*conv_factor);
+        int y = int(stoi(content[i][2])*conv_factor);
+        int width = int(stoi(content[i][3])*conv_factor);
+        int high = int(stoi(content[i][4])*conv_factor);
         Rect park_slot = Rect(x, y, width, high);
         park_slot_coll.push_back(park_slot);        
     }
@@ -71,50 +81,11 @@ void readCameraInfoCSV(CameraInfo *camera, string file_name){
     camera -> park_slot_coll = park_slot_coll;
 }
 
-/** 
-	showInstogram function perform the plotting of the 3 colour channel instogram
-	input: vector hists containing the 3 colour channel histograms; plot_name, name of the window where to plot the istograms 
-*/
-void showHistogram(vector<Mat>& hists, string plot_name) {
-
-	// variuos parameters for the cv::line function
-	const float width = 640;
-	const float heigth = 480;
-	const int hist_size = 255;
-	const int hist_w = 512, hist_h = 400;
-	const int bin_w = cvRound((double)hist_w / hist_size);
-	const float bin_width = static_cast<float>(width) / static_cast<float>(hist_size);
-
-	Mat hist_image(hist_h, hist_w, CV_8UC3, Scalar(0, 0, 0));									// initialize histogram image
-	Scalar colours[] =																			// colour channels initialization
-	{
-		{255, 0, 0},    // blue
-		{0, 255, 0},    // green
-		{0, 0, 255}     // red
-	};
-	for (int i = 0, end = hists.size(); i < end; i++)											// iterating over the instograms
-	{
-		Mat histogram = hists[i];																// current channel histogram
-		Scalar color = colours[i];																// current color
-		normalize(histogram, histogram, 0, hist_image.rows, cv::NORM_MINMAX);					// histogram normalization
-		
-	    // histogram image creation
-		for (int i = 1; i < hist_size; i++)														
-		{
-			line(hist_image, Point(bin_w*(i - 1), hist_h - cvRound(histogram.at<float>(i - 1))),
-				Point(bin_w*(i), hist_h - cvRound(histogram.at<float>(i))),
-				color, 2, 8, 0);
-		}
-	}
-	// plot image
-	imshow(plot_name, hist_image);
-}
-
 /**
 	equalHist function perform the computation and equalization of the 3 channels instograms of a colour image
 	input: Mat input_image containing the image to be equalized
 */
-void equalHist(Mat input_image) {
+Mat equalHist(Mat input_image) {
 
 	// divide the image in the 3 color channels
 	vector<Mat> RGB_channels;
@@ -160,14 +131,5 @@ void equalHist(Mat input_image) {
 	vector<Mat> equalized_channels = { EQ_channel_R, EQ_channel_G, EQ_channel_B };
 	Mat EQ_image;
 	merge(equalized_channels, EQ_image);
-
-
-	// plotting histograms
-	showHistogram(hists, "Originale Image Histogram");
-	showHistogram(equalized_hists, "Equalized Image Histogram");
-
-
-	// visualize the images
-	cv::imshow("Origial Image", input_image);
-	cv::imshow("Equalized Image", EQ_image);
+	return EQ_image;
 }
