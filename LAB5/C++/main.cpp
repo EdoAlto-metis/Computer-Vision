@@ -3,12 +3,14 @@
 
 
 #include <fstream>
+#include <filesystem>
 #include <string>
 #include <vector>
 #include <sstream>
  
 using namespace std;
 using namespace cv;
+using recursive_directory_iterator = std::filesystem::recursive_directory_iterator;
 
 struct CameraInfo{
     vector<string> slot_id_coll;
@@ -37,15 +39,18 @@ int main(int, char**) {
 		Mat EQ_sub_image = equalHist(resized_sub_image);
         sub_images.push_back(EQ_sub_image);
     }
+	image_path = "/home/edoardo/Pictures/Computer-Vision/LAB5/full_img";
+	for (const auto& dirEntry : recursive_directory_iterator(image_path)){
+		std::cout << dirEntry << std::endl;
+	}
+	/*
 	for (int img_index = 0; img_index<sub_images.size(); img_index++){
 		Mat image = sub_images[img_index];
 		imshow("substracted image", image);
 		waitKey(0);
 	}
 	destroyAllWindows();
-
-    //equalHist();
-	//waitKey(0);
+	*/
 }
 
 void readCameraInfoCSV(CameraInfo *camera, string file_name){
