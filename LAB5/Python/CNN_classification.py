@@ -83,27 +83,17 @@ pd_dataframe_list = []
 for file in os.listdir(img_path):
     filename, ext = os.path.splitext(file)
     if ext == '.csv' and filename != "image_linker":
-        print(file)
         pd_dataframe = pd.read_csv(file)
-        pd_dataframe_list.append(pd_dataframe)
-
-
-for dataframe in pd_dataframe_list:
-    image_name_list = dataframe["Park Slot Image"]
-    classification_res = []
-    net_res = []
-    for image_filename in image_name_list:
-        image = Image.open(image_filename)
-        image = imResize(image)
-        image.show()
-        image_tensor = toTensor(image)
-        net_out = net.forward(image_tensor)
-        net_res.append(net_out)
-        net_out_array = net_out.detach().numpy()
-        net_class = np.argmax(net_out_array)
-        classification_res.append(net_class)
-    serial_class_res = pd.Series(classification_res)
-    updated_dataframe = pd.concat([dataframe, serial_class_res.rename("Classification Result")], axis = 1)
-    updated_dataframe.to_csv()
-    
+        image_name_list = pd_dataframe["Park Slot Image"]
+        classification_res = []
+        for image_filename in image_name_list:
+            image = Image.open(image_filename)
+            image = imResize(image)
+            image_tensor = toTensor(image)
+            net_out = net.forward(image_tensor)
+            net_out_array = net_out.detach().numpy()
+            net_class = np.argmax(net_out_array)
+            classification_res.append(net_class)
+        pd_dataframe["Classification Result"] = classification_res
+        pd_dataframe.to_csv(file)
 
