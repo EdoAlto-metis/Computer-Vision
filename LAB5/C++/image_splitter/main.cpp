@@ -66,7 +66,7 @@ int main(int, char**) {
 															   {"Park Slot Y", park_slot_y_coll},
 															   {"Park Slot Width", park_slot_width_coll},
 															   {"Park Slot Height", park_slot_height_coll}};
-		write_csv(image_collect_path+"park_"+to_string(image_counter)+"_park_slot_info.csv", park_slot_info);
+		write_csv(image_collect_path+"image_"+to_string(image_counter)+"_park_slot_info.csv", park_slot_info);
 		image_counter++;
 	}
 	vector<pair<string, vector<string>>> path_link = {{"Original Path", original_path_coll}, {"Splitted Image Path", splitted_path_coll}};

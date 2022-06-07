@@ -68,7 +68,7 @@ net = CNN(cnn_layers=3,
           kernel_size=2,
           cnn_act_fcn=nn.Sigmoid(),
           hidden_layer_list=[358, 302, 199],
-          drop_c=0.5)
+          drop_c=0.25)
 
 python_path = "/home/edoardo/Desktop/Computer-Vision/LAB5/Python/"
 os.chdir(python_path)
