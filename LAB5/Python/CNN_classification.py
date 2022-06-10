@@ -53,7 +53,10 @@ class CNN(nn.Module):
     def forward(self, x):
         softmax = nn.Softmax(dim=-1)
         out = self.cnn_model(x)
-        out = torch.flatten(out)
+        if len(out.shape) == 4:
+            out = out.view(out.size(0), -1)
+        else:
+            out = torch.flatten(out)
         out = self.linear_model(out)
         return softmax(out)
 
@@ -63,19 +66,10 @@ class CNN(nn.Module):
         print("Linear modules:\n{}".format(self.linear_model))
 
 
-net = CNN(cnn_layers=2,
-          cnn_channels=30,
-          kernel_size=5,
-          cnn_act_fcn=nn.Sigmoid(),
-          hidden_layer_list=[358, 302, 199],
-          drop_c=0.25)
-
 python_path = "/home/edoardo/Desktop/Computer-Vision/LAB5/Python/"
 os.chdir(python_path)
-net.load_state_dict(torch.load("ClassificationCNN_params.pkl"))
+net = torch.load("CNN_model.pkl")
 net.eval()
-net.print_modules()
-
 img_path = "/home/edoardo/Pictures/Computer-Vision/LAB5/full_img/splitted/"
 os.chdir(img_path)
 
@@ -86,18 +80,15 @@ for file in os.listdir(img_path):
         pd_dataframe = pd.read_csv(file)
         image_name_list = pd_dataframe["Park Slot Image"]
         classification_res = []
-        net_res = []
         for image_filename in image_name_list:
             image = Image.open(image_filename)
             image = imResize(image)
             image_tensor = toTensor(image)
             net_out = net.forward(image_tensor)
             net_out_array = net_out.detach().numpy()
-            net_res.append(net_out_array)
             net_class = np.argmax(net_out_array)
             classification_res.append(net_class)
-        print(net_res)
-        print(classification_res)
         pd_dataframe["Classification Result"] = classification_res
+        print(pd_dataframe)
         pd_dataframe.to_csv(file)
 

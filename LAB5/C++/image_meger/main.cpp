@@ -16,7 +16,7 @@ struct ParkInfo{
     int y = 0;
     int width = 0;
     int height = 0;
-    int isOccupied = false;
+    bool isOccupied = false;
 };
 
 vector<vector<string>> readCSV(string file_name);
@@ -50,10 +50,19 @@ int main(int, char**) {
                                     park.height);
                 rectangle(original_image, reagion, Scalar(0, 255, 0));
             }
+            else
+            {
+                Rect reagion = Rect(park.x, 
+                                    park.y,
+                                    park.width, 
+                                    park.height);
+                rectangle(original_image, reagion, Scalar(0, 0, 255));
+            }
         }
         string final_image_filename = save_path+"classification"+to_string(image_i+1)+".jpg";
         imwrite(final_image_filename, original_image);
     }
+    cout << "Image merging completed" << endl;
 }
 
 vector<vector<string>> readImageInfoCSV(string file_name){
@@ -105,17 +114,17 @@ vector<ParkInfo> readParkInfoCSV(string file_name){
 
     ParkInfo park_slot;
     vector<ParkInfo> park_slot_info_collection;
-
+    int classification;
     for(int i=1;i<content.size();i++)
     {
         park_slot.x = stoi(content[i][2]);
         park_slot.y = stoi(content[i][3]);
         park_slot.width = stoi(content[i][4]);
         park_slot.height = stoi(content[i][5]);
-        int classification = stoi(content[i][6])==1;
+
+        classification = stoi(content[i][6])==1;
         if (classification==1) park_slot.isOccupied = true;    
         park_slot_info_collection.push_back(park_slot);  
     }
     return park_slot_info_collection;
-    cout << "Image merging completed" << endl;
 }
