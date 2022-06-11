@@ -7,14 +7,14 @@ import pandas as pd
 import os
 from PIL import Image
 toTensor = torchvision.transforms.ToTensor()
-imResize = torchvision.transforms.Resize((150, 150))
+imResize = torchvision.transforms.Resize((250, 250))
 
 
 class CNN(nn.Module):
     def __init__(self, cnn_layers=2, cnn_channels=32, kernel_size=3, cnn_act_fcn=nn.Sigmoid(), hidden_layer_list=[],
                  lin_act_fcn=nn.Sigmoid(), drop_c=0):
         super().__init__()
-        image_dimension = 150
+        image_dimension = 250
         # Convolutional layer
 
         input_channels = 3

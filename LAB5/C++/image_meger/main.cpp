@@ -42,13 +42,13 @@ int main(int, char**) {
         for (int park_i = 0; park_i<park_info_coll.size(); park_i++)
         {
             ParkInfo park = park_info_coll[park_i];
-            if(!park.isOccupied)
+            if(park.isOccupied)
             {
                 Rect reagion = Rect(park.x, 
                                     park.y,
                                     park.width, 
                                     park.height);
-                rectangle(original_image, reagion, Scalar(0, 255, 0));
+                rectangle(original_image, reagion, Scalar(0, 0, 255));
             }
             else
             {
@@ -56,7 +56,7 @@ int main(int, char**) {
                                     park.y,
                                     park.width, 
                                     park.height);
-                rectangle(original_image, reagion, Scalar(0, 0, 255));
+                rectangle(original_image, reagion, Scalar(0, 255, 0));
             }
         }
         string final_image_filename = save_path+"classification"+to_string(image_i+1)+".jpg";
@@ -123,7 +123,14 @@ vector<ParkInfo> readParkInfoCSV(string file_name){
         park_slot.height = stoi(content[i][5]);
 
         classification = stoi(content[i][6])==1;
-        if (classification==1) park_slot.isOccupied = true;    
+        if (classification==1)
+        {
+            park_slot.isOccupied = true;
+        }
+        else
+        {
+            park_slot.isOccupied = false;
+        }     
         park_slot_info_collection.push_back(park_slot);  
     }
     return park_slot_info_collection;
