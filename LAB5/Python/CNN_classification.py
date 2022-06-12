@@ -9,7 +9,7 @@ from PIL import Image
 toTensor = torchvision.transforms.ToTensor()
 imResize = torchvision.transforms.Resize((250, 250))
 
-
+# Network class
 class CNN(nn.Module):
     def __init__(self, cnn_layers=2, cnn_channels=32, kernel_size=3, cnn_act_fcn=nn.Sigmoid(), hidden_layer_list=[],
                  lin_act_fcn=nn.Sigmoid(), drop_c=0):
@@ -74,21 +74,29 @@ img_path = "/home/edoardo/Pictures/Computer-Vision/LAB5/full_img/splitted/"
 os.chdir(img_path)
 
 pd_dataframe_list = []
+# Iterating over files in the folder
 for file in os.listdir(img_path):
     filename, ext = os.path.splitext(file)
+    # Excluding image files and image linker
     if ext == '.csv' and filename != "image_linker":
         pd_dataframe = pd.read_csv(file)
         image_name_list = pd_dataframe["Park Slot Image"]
         classification_res = []
+        # Iterating over image in each csv file
         for image_filename in image_name_list:
+            # Opening image
             image = Image.open(image_filename)
+            # Image conversion
             image = imResize(image)
             image_tensor = toTensor(image)
+            # Ner output
             net_out = net.forward(image_tensor)
             net_out_array = net_out.detach().numpy()
             net_class = np.argmax(net_out_array)
             classification_res.append(net_class)
+        # Updating the csv file related to the image
         pd_dataframe["Classification Result"] = classification_res
         print(pd_dataframe)
+        # Saving the dataframe to csv file
         pd_dataframe.to_csv(file)
 

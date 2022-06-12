@@ -7,7 +7,7 @@
 #include <string>
 #include <vector>
 #include <sstream>
-#include <utility> // std::pair
+#include <utility>
  
 using namespace std;
 using namespace cv;
@@ -27,6 +27,7 @@ int main(int, char**) {
 	int image_counter = 1;
 	vector<string> original_path_coll;
 	vector<string> splitted_path_coll;
+    // Iterating over the file in the work path folder
 	for(auto& path_obj: recursive_directory_iterator(work_path))
 	{	
 		string save_slot_order_path = image_collect_path+"image_"+to_string(image_counter);
@@ -41,20 +42,24 @@ int main(int, char**) {
 		vector<string> park_slot_y_coll;
 		vector<string> park_slot_width_coll;
 		vector<string> park_slot_height_coll; 
-		for (int i = 0; i < cam_1.park_slot_coll.size(); i++)
+		// Iterating over park slot
+        for (int i = 0; i < cam_1.park_slot_coll.size(); i++)
 		{	
 			Rect park_slot = cam_1.park_slot_coll[i];
 			park_slot_x_coll.push_back(to_string(park_slot.x));
 			park_slot_y_coll.push_back(to_string(park_slot.y));
 			park_slot_width_coll.push_back(to_string(park_slot.width));
 			park_slot_height_coll.push_back(to_string(park_slot.height));
-			Mat sub_image = input_image(park_slot);
+			// Extracting the park slot image
+            Mat sub_image = input_image(park_slot);
 			Mat resized_sub_image;
-			resize(sub_image, resized_sub_image, Size(250, 250), INTER_CUBIC);
+			// Resizing in 250x250
+            resize(sub_image, resized_sub_image, Size(250, 250), INTER_CUBIC);
 			String split_filename = save_slot_order_path+"_slot_"+to_string(i+1)+".jpg";
 			park_slot_path_coll.push_back(split_filename);
 			imwrite(split_filename, resized_sub_image);
 		}
+        // Writing CSV
 		vector<pair<string, vector<string>>> park_slot_info = {{"Park Slot Image", park_slot_path_coll},
 															   {"Park Slot X", park_slot_x_coll},
 															   {"Park Slot Y", park_slot_y_coll},
@@ -63,11 +68,17 @@ int main(int, char**) {
 		write_csv(image_collect_path+"image_"+to_string(image_counter)+"_park_slot_info.csv", park_slot_info);
 		image_counter++;
 	}
+    // Writing image linker csv
 	vector<pair<string, vector<string>>> path_link = {{"Original Path", original_path_coll}, {"Splitted Image Path", splitted_path_coll}};
 	write_csv(image_collect_path+"image_linker.csv", path_link);
 
 	std::cout << "Image splitting task completed" << endl;
 }
+
+/*
+    readCameraInfoCSV returns inside a ParkInfo structure the information about the park slot:
+    position in x,y and are, width and high
+*/
 
 void readCameraInfoCSV(CameraInfo *camera, string file_name){
     vector<vector<string>> content;
@@ -88,15 +99,15 @@ void readCameraInfoCSV(CameraInfo *camera, string file_name){
     
     vector<string> slot_id_coll;
     vector<Rect> park_slot_coll; 
-	float conv_factor = 0.385;
-	float size_increment = 1;														// Adding 20% window size
+    float conv_factor = 0.385;                                                      // From original resolution to 1000x750 pixel image
+	float size_increment = 1.2;														// Adding 20% window size
     for(int i=1;i<content.size();i++){
         slot_id_coll.push_back(content[i][0]);
         int x = int(stoi(content[i][1])*conv_factor);
         int y = int(stoi(content[i][2])*conv_factor);
         int width = int(stoi(content[i][3])*conv_factor);
 		int high = int(stoi(content[i][4])*conv_factor);
-
+        // Incrementing park slot size when possible
 		if (x+width*size_increment<1000)
 		{
 			width = int(width*size_increment);
@@ -112,7 +123,9 @@ void readCameraInfoCSV(CameraInfo *camera, string file_name){
     camera -> park_slot_coll = park_slot_coll;
 }
 
-
+/*
+    write csv method, taken from internet
+*/
 void write_csv(std::string filename, vector<pair<string, vector<string>>> dataset){
     // Make a CSV file with one or more columns of integer values
     // Each column of data is represented by the pair <column name, column data>

@@ -32,16 +32,20 @@ int main(int, char**) {
     vector<string> original_image_filenames;
     vector<string> splitted_partial_paths;
     vector<vector<string>> string_collection;
+    // Getting the entry (input image, splitted reference)
     string_collection = readImageInfoCSV(csv_filename);
     original_image_filenames = string_collection[0];
     splitted_partial_paths = string_collection[1];
+    // Iterating over image filenames
     for (int image_i=0; image_i<original_image_filenames.size(); image_i++){
         Mat original_image = imread(original_image_filenames[image_i]);
         string park_info_csv_file_path = splitted_partial_paths[image_i]+"_park_slot_info.csv";
         vector<ParkInfo> park_info_coll = readParkInfoCSV(park_info_csv_file_path);
+        // Itearing over park slots
         for (int park_i = 0; park_i<park_info_coll.size(); park_i++)
         {
             ParkInfo park = park_info_coll[park_i];
+            // Park slot busy => red square on park slot
             if(park.isOccupied)
             {
                 Rect reagion = Rect(park.x, 
@@ -50,6 +54,7 @@ int main(int, char**) {
                                     park.height);
                 rectangle(original_image, reagion, Scalar(0, 0, 255));
             }
+            // Park slot free => green square on park slot
             else
             {
                 Rect reagion = Rect(park.x, 
@@ -59,12 +64,17 @@ int main(int, char**) {
                 rectangle(original_image, reagion, Scalar(0, 255, 0));
             }
         }
+        // Save image with coloured boxes
         string final_image_filename = save_path+"classification"+to_string(image_i+1)+".jpg";
         imwrite(final_image_filename, original_image);
     }
     cout << "Image merging completed" << endl;
 }
 
+/*
+    readImageInfoCSV read the csv file containing the path and link information 
+    between original image and splitted image. This method returns a vector of string entry
+*/
 vector<vector<string>> readImageInfoCSV(string file_name){
     vector<vector<string>> content;
     vector<string> row;
@@ -94,7 +104,10 @@ vector<vector<string>> readImageInfoCSV(string file_name){
     return output;
 }
 
-
+/*
+    readParkInfoCSV reads, for each park slot, position, width, high and classification resuls.
+    This method returns a vector of structure ParkInfo, containers of the imformation
+*/
 vector<ParkInfo> readParkInfoCSV(string file_name){
     vector<vector<string>> content;
     vector<string> row;
